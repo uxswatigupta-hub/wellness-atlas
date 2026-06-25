@@ -1,0 +1,303 @@
+.detox-section {
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 40px;
+    align-items: center;
+
+    padding: 60px;
+}
+
+/* LEFT COLUMN */
+
+.left-content {
+    text-align: center;
+}
+
+.body-image {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+}
+
+.quote {
+    margin-top: 40px;
+
+    font-size: 2rem;
+    line-height: 1.4;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+/* CENTER COLUMN */
+
+.middle-content {
+    text-align: center;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.main-title {
+    font-size: 5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.description {
+    font-size: 2rem;
+    margin-bottom: 60px;
+}
+
+.dates {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.registration-card {
+    background: #b7d59f;
+    color: #000;
+
+    width: 100%;
+    max-width: 450px;
+
+    padding: 10px 10px;
+    border-radius: 10px;
+
+    text-align: center;
+}
+
+.registration-card h3 {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.registration-card p {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+/* TABLET */
+
+@media (max-width: 992px) {
+    .detox-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .main-title {
+        font-size: 4rem;
+    }
+
+    .description {
+        font-size: 1.5rem;
+    }
+
+    .dates {
+        font-size: 1.4rem;
+    }
+
+    .quote {
+        font-size: 1.6rem;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 576px) {
+    .detox-section {
+        gap: 30px;
+        padding: 24px 16px;
+    }
+
+    .body-image {
+        max-width: 280px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .main-title {
+        font-size: 2.6rem;
+    }
+
+    .description {
+        font-size: 1.1rem;
+    }
+
+    .dates {
+        font-size: 1rem;
+    }
+
+    .quote {
+        font-size: 1.2rem;
+    }
+
+    .registration-card {
+        padding: 30px 20px;
+    }
+
+    .registration-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .registration-card p {
+        font-size: 1.25rem;
+    }
+     .footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 24px;
+        padding-top: 32px;
+    }
+
+    .footer-left {
+        max-width: 100%;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .footer-left span {
+        display: none;
+    }
+
+    .footer-right {
+        text-align: center;
+    }
+}
+
+.footer {
+    width: 100%;
+    box-sizing: border-box;
+}
+.toxins-section {
+  background: #e5e5e5;
+  padding: 60px 20px;
+}
+
+.toxins-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #f5ebd7;
+  padding: 50px;
+}
+
+.toxins-title {
+  text-align: center;
+  font-size: 3rem;
+  line-height: 1.15;
+  font-weight: 700;
+  margin-bottom: 60px;
+}
+
+.toxin-block {
+  margin-bottom: 60px;
+}
+
+.question {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.question.right {
+  text-align: right;
+}
+
+.toxin-card {
+  background: #d9a64d;
+  border-radius: 0 200px 200px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 30px 40px;
+  gap: 30px;
+}
+
+.toxin-card.reverse {
+  border-radius: 200px 0 0 200px;
+}
+
+.image-side {
+  flex: 1;
+  text-align: center;
+}
+
+.image-side img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+}
+
+.text-side {
+  flex: 1.5;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* TABLET */
+
+@media (max-width: 992px) {
+  .toxins-title {
+    font-size: 2.4rem;
+  }
+
+  .question {
+    font-size: 1.5rem;
+  }
+
+  .text-side {
+    font-size: 1.2rem;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+  .toxins-container {
+    padding: 30px 20px;
+  }
+
+  .toxins-title {
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+  }
+
+  .question,
+  .question.right {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .toxin-card,
+  .toxin-card.reverse {
+    flex-direction: column;
+    border-radius: 40px;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .text-side {
+    font-size: 1rem;
+  }
+
+  .image-side img {
+    max-width: 160px;
+  }
+}
