@@ -499,3 +499,147 @@
     padding-right: 22px;
   }
 }
+
+
+/* Navbar
+   Wellness Atlas skin layered on top of Bootstrap 5 defaults.
+   Swap the fallback hex/fonts in var(--wa-*, fallback) for your real tokens. */
+
+:root {
+  --wa-bg: #faf8ef;
+  --wa-text: #3a352c;
+  --wa-accent: #a9794a;
+  --wa-accent-dark: #976840;
+  --wa-panel: #ffffff;
+  --wa-hover: #f3efe2;
+  --wa-font-head: "Poppins", system-ui, sans-serif;
+  --wa-font-body: "Nunito Sans", system-ui, sans-serif;
+}
+
+/* ---- bar ---- */
+.wa-nav {
+  background: var(--wa-bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.wa-brand {
+  font: 600 18px var(--wa-font-head);
+  color: var(--wa-text) !important;
+  letter-spacing: 0.3px;
+}
+
+/* ---- links ---- */
+.wa-nav .nav-link {
+  font: 600 15.5px var(--wa-font-body);
+  color: var(--wa-text);
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+/*.wa-nav .nav-link:hover,
+.wa-nav .nav-link:focus {
+  color: var(--wa-accent);
+  background: rgba(0, 0, 0, 0.04);
+}*/
+
+.wa-nav .nav-link:hover {
+  color: var(--wa-accent);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Don't keep the toggle highlighted after the menu collapses.
+   Strip Bootstrap's lingering :focus/:active styling, and only
+   show the background while the menu is actually open (.show). */
+.wa-nav .dropdown-toggle:focus,
+.wa-nav .dropdown-toggle:active,
+.wa-nav .dropdown-toggle.show {
+  background: transparent;
+  color: var(--wa-text);
+  box-shadow: none;
+}
+.wa-nav .dropdown.show .dropdown-toggle {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--wa-accent);
+}
+
+/* ---- dropdown panel ---- */
+.wa-nav .dropdown-menu {
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(58, 53, 44, 0.14);
+  padding: 8px;
+  margin-top: 8px;
+  background: var(--wa-panel);
+}
+.wa-nav .dropdown-item {
+  border-radius: 9px;
+  padding: 10px 14px;
+  font: 600 14.5px var(--wa-font-body);
+  color: #4a443a;
+}
+.wa-nav .dropdown-item:hover,
+.wa-nav .dropdown-item:focus {
+  background: var(--wa-hover);
+  color: var(--wa-accent);
+}
+
+/* ---- custom chevron (replaces Bootstrap's default caret) ---- */
+.wa-nav .dropdown-toggle::after {
+  border: none;
+  width: 7px;
+  height: 7px;
+  margin-left: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  vertical-align: 1px;
+  transition: transform 0.2s ease;
+}
+.wa-nav .show > .dropdown-toggle::after {
+  transform: rotate(225deg);
+}
+
+/* ---- login button ---- */
+.wa-login {
+  background: var(--wa-accent) !important;
+  border: none !important;
+  border-radius: 10px;
+  padding: 10px 28px;
+  font: 600 14px var(--wa-font-head);
+  letter-spacing: 1.5px;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(169, 121, 74, 0.28);
+}
+.wa-login:hover,
+.wa-login:focus {
+  background: var(--wa-accent-dark) !important;
+}
+
+/* ---- hamburger toggle ---- */
+.wa-nav .navbar-toggler {
+  border: none;
+  padding: 6px;
+}
+.wa-nav .navbar-toggler:focus {
+  box-shadow: none;
+}
+
+/* ---- mobile (collapsed) tweaks ---- */
+@media (max-width: 991.98px) {
+  .wa-nav .navbar-collapse {
+    padding-top: 12px;
+  }
+  .wa-nav .dropdown-menu {
+    box-shadow: none;
+    border: none;
+    margin-top: 0;
+    padding-left: 12px;
+    background: transparent;
+  }
+  .wa-login {
+    width: 100%;
+    text-align: center;
+  }
+}

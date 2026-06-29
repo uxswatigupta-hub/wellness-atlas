@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.b531341b.css",
-    "main.js": "/static/js/main.07394dfa.js",
+    "main.css": "/static/css/main.24f87250.css",
+    "main.js": "/static/js/main.4370128b.js",
     "static/media/productivity.png": "/static/media/productivity.877976a33a33685c3333.png",
     "static/media/hair.png": "/static/media/hair.8329f0bf3ae72e9a5102.png",
     "static/media/hormone.png": "/static/media/hormone.d5a7f66fd39c2ec3e77b.png",
@@ -25,11 +25,11 @@
     "static/media/icon-productivity.svg": "/static/media/icon-productivity.f40dd31de9dde2b79933edf1c5b375db.svg",
     "static/media/icon-health.svg": "/static/media/icon-health.a3e6ca6b06583a7a2f1ca19467a1ade0.svg",
     "static/media/icon-happiness.svg": "/static/media/icon-happiness.d0be9059ff0b1c67658da31bdfae815e.svg",
-    "main.b531341b.css.map": "/static/css/main.b531341b.css.map",
-    "main.07394dfa.js.map": "/static/js/main.07394dfa.js.map"
+    "main.24f87250.css.map": "/static/css/main.24f87250.css.map",
+    "main.4370128b.js.map": "/static/js/main.4370128b.js.map"
   },
   "entrypoints": [
-    "static/css/main.b531341b.css",
-    "static/js/main.07394dfa.js"
+    "static/css/main.24f87250.css",
+    "static/js/main.4370128b.js"
   ]
 }

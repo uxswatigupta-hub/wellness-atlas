@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ChallengeCard from "./ChallengeCard";
 import { SAMPLE_CHALLENGES, normalizeChallenge } from "./challenges.data";
-import logoImg from "../../../assets/logo/WellnessAtlas_Logo1.png";
 import communityImg from "../../../assets/logo/participating+communities.png";
 import { useNavigate } from "react-router-dom";
+import SiteNav from "../../../components/navbar/navbar";
 
-const NAV_LEFT = ["home", "philosophy", "people", "offerings", "events", "testimonials"];
-const NAV_RIGHT = ["learn", "weshare", "health2.0", "community.inc", "join"];
+
+/*const NAV_LEFT = ["home", "philosophy", "people", "offerings", "events", "testimonials"];
+const NAV_RIGHT = ["learn", "weshare", "health2.0", "community.inc", "join"];*/
 
 /**
  * HealthChallenges — Wellness Atlas challenges page.
@@ -75,38 +76,8 @@ export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" 
 
     return (
         <div className={pageClass} style={{ "--cols": columns }}>
-            {/* NAV */}
-            <nav className="tt-nav">
-                <div className="tt-container d-flex justify-content-between align-items-center">
 
-                    <div className="d-flex gap-4">
-                        {NAV_LEFT.map((l) => (
-                            <span key={l} className="tt-nav-link">{l}</span>
-                        ))}
-                    </div>
-
-                    <div className="tt-brand">
-                        <img
-                            src={logoImg}
-                            alt="Wellness Atlas"
-                            className="tt-brand-logo"
-                        />
-                    </div>
-
-                    <div className="d-flex gap-4">
-                        {NAV_RIGHT.map((l) => (
-                            <span key={l} className="tt-nav-link">{l}</span>
-                        ))}
-                    </div>
-                    <button
-                        type="button"
-                        className="wa-btn wa-btn--solid ms-auto ms-lg-0"
-                        onClick={() => navigate("/login")}
-                    >
-                        LOGIN
-                    </button>
-                </div>
-            </nav>
+            <SiteNav />
 
             {/* HERO */}
             <header className="wa-hero">
@@ -247,16 +218,16 @@ export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" 
             {/* FOOTER */}
             <footer className="wa-footer">
                 <div className="wa-footer__links">
-                    <span>terms of use</span>
+                    <span>Terms of use</span>
                     <span className="sep">|</span>
-                    <span>privacy policy</span>
+                    <span>Privacy policy</span>
                     <span className="sep">|</span>
-                    <span>about us</span>
+                    <span>About us</span>
                     <span className="sep">|</span>
-                    <span>reach us</span>
+                    <span>Reach us</span>
                 </div>
                 <div>Helpline +91-82176-08659, support@thewellnessatlas.com</div>
             </footer>
-        </div>
+        </div >
     );
 }

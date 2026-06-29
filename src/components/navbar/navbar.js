@@ -1,71 +1,76 @@
-import { useState } from "react";
-import logoImg from '../../assets/WellnessAtlas_Logo1.png';
-import "./navbar.css";
+// Navbar.jsx — reusable site navigation (Wellness Atlas)
+// Responsive: full bar on desktop, hamburger collapse on mobile.
+// Requires: react-bootstrap + bootstrap installed
+//   npm install react-bootstrap bootstrap
+//
+// Usage on any page:
+//   import SiteNav from "./Navbar";
+//   <SiteNav />
 
-function Navbar() {
-    const [menuOpen, setMenuOpen] = useState(false);
+import { Navbar, Nav, NavDropdown, Container, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../../styles/wellness-atlas.css";
+import logoImg from "../../assets/logo/WellnessAtlas_Logo1.png";
 
-    return (
-        <nav>
-            <header className="site-header">
+// Single source of truth for the menu structure.
+// Edit here and it updates on every page.
+const MENUS = {
+  About:     ["Philosophy", "People", "Testimonials"],
+  Wellness:  ["Offerings", "Challenges", "Events"],
+  Learn:     ["School of Life", "WeShare", "Health 2.0"],
+  Community: ["Community.Inc", "Join"],
+};
 
-                <nav className="desktop-nav nav-left">
-                    <a href="/">home</a>
-                    <a href="/">philosophy</a>
-                    <a href="/">people</a>
-                    <a href="/">offerings</a>
-                    <a href="/">events</a>
-                    <a href="/">testimonials</a>
-                </nav>
+// Optional: map each item label to a real route.
+const LINKS = {
+  Philosophy: "/about/philosophy",
+  People: "/about/people",
+  Testimonials: "/about/testimonials",
+  Offerings: "/wellness/offerings",
+  Challenges: "/wellness/challenges",
+  Events: "/wellness/events",
+  "School of Life": "/learn/school-of-life",
+  WeShare: "/learn/weshare",
+  "Health 2.0": "/learn/health-2-0",
+  "Community.Inc": "/community/inc",
+  Join: "/community/join",
+};
 
-                <div className="logo">
-                    <img
-                        src={logoImg}
-                        alt="Wellness Atlas"
-                    />
-                </div>
+export default function SiteNav() {
+  return (
+    <Navbar expand="lg" className="wa-nav" collapseOnSelect sticky="top">
+      <Container fluid className="px-lg-4 px-3">
+        {/* Left: logo */}
+        <Navbar.Brand href="/" className="wa-brand d-flex align-items-center gap-2">
+           <img src={logoImg} alt="Wellness Atlas" className="tt-brand-logo" />
+          {/*<span>Wellness Atlas</span>*/}
+        </Navbar.Brand>
 
-                <nav className="desktop-nav nav-right">
-                    <a href="/">learn</a>
-                    <a href="/">schooloflife</a>
-                    <a href="/">weshare</a>
-                    <a href="/">health2.0</a>
-                    <a href="/">community.inc</a>
-                    <a href="/">join</a>
-                </nav>
+        {/* Hamburger — auto-shows below the `lg` breakpoint */}
+        <Navbar.Toggle aria-controls="wa-navbar" />
 
-                <button
-                    className="hamburger"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    ☰
-                </button>
+        <Navbar.Collapse id="wa-navbar">
+          {/* Center: categorized links */}
+          <Nav className="mx-auto align-items-lg-center gap-lg-4">
+            <Nav.Link href="/">Home</Nav.Link>
 
-            </header>
+            {Object.entries(MENUS).map(([label, items]) => (
+              <NavDropdown title={label} id={`nd-${label}`} key={label}>
+                {items.map((item) => (
+                  <NavDropdown.Item href={LINKS[item] || "#"} key={item}>
+                    {item}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
+            ))}
+          </Nav>
 
-            {menuOpen && (
-                <div className="mobile-menu">
-
-                    <a href="/">home</a>
-                    <a href="/">philosophy</a>
-                    <a href="/">people</a>
-                    <a href="/">offerings</a>
-                    <a href="/">events</a>
-                    <a href="/">testimonials</a>
-
-                    <hr />
-
-                    <a href="/">learn</a>
-                    <a href="/">schooloflife</a>
-                    <a href="/">weshare</a>
-                    <a href="/">health2.0</a>
-                    <a href="/">community.inc</a>
-                    <a href="/">join</a>
-
-                </div>
-            )}
-        </nav> 
-    );
+          {/* Right: login */}
+          <Button href="/login" className="wa-login ms-lg-3 mt-3 mt-lg-0">
+            LOGIN
+          </Button>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
 }
-
-export default Navbar;
