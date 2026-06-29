@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import ChallengeCard from "./ChallengeCard";
 import { SAMPLE_CHALLENGES, normalizeChallenge } from "./challenges.data";
 import communityImg from "../../../assets/logo/participating+communities.png";
-import { useNavigate } from "react-router-dom";
 import SiteNav from "../../../components/navbar/navbar";
 
 
@@ -26,7 +25,6 @@ const NAV_RIGHT = ["learn", "weshare", "health2.0", "community.inc", "join"];*/
 export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" }) {
     const [challenges, setChallenges] = useState(null);
     const [tab, setTab] = useState("upcoming"); // "upcoming" | "past"
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (!apiUrl) return;
