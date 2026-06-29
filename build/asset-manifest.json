@@ -1,16 +1,35 @@
 {
   "files": {
-    "main.css": "/static/css/main.85903b10.css",
-    "main.js": "/static/js/main.5ca658cd.js",
-    "static/js/453.db330a7d.chunk.js": "/static/js/453.db330a7d.chunk.js",
+    "main.css": "/static/css/main.b531341b.css",
+    "main.js": "/static/js/main.07394dfa.js",
+    "static/media/productivity.png": "/static/media/productivity.877976a33a33685c3333.png",
+    "static/media/hair.png": "/static/media/hair.8329f0bf3ae72e9a5102.png",
+    "static/media/hormone.png": "/static/media/hormone.d5a7f66fd39c2ec3e77b.png",
+    "static/media/weightloss.png": "/static/media/weightloss.2dd9a20632d4e986fbfa.png",
+    "static/media/guthealth.jpeg": "/static/media/guthealth.760899b6526a99f6dafe.jpeg",
+    "static/media/relationship.png": "/static/media/relationship.d945cb31dd408f715914.png",
+    "static/media/organcleanse.jpg": "/static/media/organcleanse.9376d2818c792aef3221.jpg",
+    "static/media/salad.png": "/static/media/salad.a99c1ba436be14fffbe4.png",
+    "static/media/festival.jpg": "/static/media/festival.1d87d725c7c1bebdd926.jpg",
+    "static/media/cooking.png": "/static/media/cooking.f74b19c69a4922c1ecb5.png",
+    "static/media/mirrorchallenge.png": "/static/media/mirrorchallenge.8aaba8ffba8b0dc1b1c8.png",
+    "static/media/participating+communities.png": "/static/media/participating+communities.3bd18e517f3073008706.png",
     "static/media/WellnessAtlas_Logo1.png": "/static/media/WellnessAtlas_Logo1.b9129b310f55f92abff5.png",
+    "static/media/dopaminedetox.png": "/static/media/dopaminedetox.6c7796139db3658347fa.png",
+    "static/media/10ksteps.jpeg": "/static/media/10ksteps.4f2d680d9ba4008699fe.jpeg",
+    "static/media/toxin.png": "/static/media/toxin.e47b040830823c2da0e7.png",
+    "static/media/sleep.png": "/static/media/sleep.c1361b7bbd47f4419f6a.png",
+    "static/media/hero-sleep.svg": "/static/media/hero-sleep.ca7a7265de1f59341d05b52142d939de.svg",
+    "static/media/program-meditation.svg": "/static/media/program-meditation.9f678cc970bac7ed571c1c03f954cf2c.svg",
     "index.html": "/index.html",
-    "main.85903b10.css.map": "/static/css/main.85903b10.css.map",
-    "main.5ca658cd.js.map": "/static/js/main.5ca658cd.js.map",
-    "453.db330a7d.chunk.js.map": "/static/js/453.db330a7d.chunk.js.map"
+    "static/media/icon-productivity.svg": "/static/media/icon-productivity.f40dd31de9dde2b79933edf1c5b375db.svg",
+    "static/media/icon-health.svg": "/static/media/icon-health.a3e6ca6b06583a7a2f1ca19467a1ade0.svg",
+    "static/media/icon-happiness.svg": "/static/media/icon-happiness.d0be9059ff0b1c67658da31bdfae815e.svg",
+    "main.b531341b.css.map": "/static/css/main.b531341b.css.map",
+    "main.07394dfa.js.map": "/static/js/main.07394dfa.js.map"
   },
   "entrypoints": [
-    "static/css/main.85903b10.css",
-    "static/js/main.5ca658cd.js"
+    "static/css/main.b531341b.css",
+    "static/js/main.07394dfa.js"
   ]
 }

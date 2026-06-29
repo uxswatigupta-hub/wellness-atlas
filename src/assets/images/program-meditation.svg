@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" width="640" height="460" role="img" aria-label="A person seated in calm breathing meditation among plants">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfaf5"></stop>
+      <stop offset="1" stop-color="#eef0e3"></stop>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.42" r="0.5">
+      <stop offset="0" stop-color="#cbd8b0" stop-opacity="0.7"></stop>
+      <stop offset="1" stop-color="#cbd8b0" stop-opacity="0"></stop>
+    </radialGradient>
+    <clipPath id="round2"><rect x="0" y="0" width="640" height="460" rx="16"></rect></clipPath>
+  </defs>
+
+  <g clip-path="url(#round2)">
+    <rect width="640" height="460" fill="url(#bg2)"></rect>
+    <circle cx="320" cy="210" r="200" fill="url(#halo)"></circle>
+
+    
+    <g fill="none" stroke="#b2c58c" stroke-opacity="0.55">
+      <circle cx="320" cy="226" r="150" stroke-width="2"></circle>
+      <circle cx="320" cy="226" r="118" stroke-width="2" stroke-opacity="0.4"></circle>
+    </g>
+
+    
+    <g>
+      
+      <path d="M232 360 C 250 326 390 326 408 360 C 420 384 220 384 232 360 Z" fill="#2e4032"></path>
+      
+      <path d="M285 250 C 285 222 355 222 355 250 L368 340 C 372 360 268 360 272 340 Z" fill="#39503d"></path>
+      
+      <circle cx="320" cy="206" r="34" fill="#dcc8b2"></circle>
+      
+      <path d="M286 200 C 290 168 350 168 354 200 C 344 188 296 188 286 200 Z" fill="#2a352a"></path>
+      
+      <path d="M285 286 C 250 300 236 330 244 352" fill="none" stroke="#dcc8b2" stroke-width="16" stroke-linecap="round"></path>
+      <path d="M355 286 C 390 300 404 330 396 352" fill="none" stroke="#dcc8b2" stroke-width="16" stroke-linecap="round"></path>
+    </g>
+
+    
+    <g fill="#626e55">
+      <path d="M90 460 C 86 400 110 372 96 340 C 122 360 120 404 110 460 Z"></path>
+      <path d="M120 460 C 130 408 156 392 150 356 C 172 384 158 426 142 460 Z" fill="#6f7e5a"></path>
+    </g>
+    <g fill="#626e55">
+      <path d="M550 460 C 554 400 530 372 544 340 C 518 360 520 404 530 460 Z"></path>
+      <path d="M520 460 C 510 408 484 392 490 356 C 468 384 482 426 498 460 Z" fill="#6f7e5a"></path>
+    </g>
+
+    
+    <circle cx="320" cy="92" r="16" fill="#c27a4f"></circle>
+  </g>
+</svg>

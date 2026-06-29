@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 630" width="600" height="630" role="img" aria-label="A figure sleeping peacefully under a crescent moon and stars">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a352a"></stop>
+      <stop offset="0.55" stop-color="#2e4032"></stop>
+      <stop offset="1" stop-color="#39503d"></stop>
+    </linearGradient>
+    <radialGradient id="moonGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e7d3b8" stop-opacity="0.55"></stop>
+      <stop offset="1" stop-color="#e7d3b8" stop-opacity="0"></stop>
+    </radialGradient>
+    <clipPath id="round"><rect x="0" y="0" width="600" height="630" rx="20"></rect></clipPath>
+  </defs>
+
+  <g clip-path="url(#round)">
+    <rect width="600" height="630" fill="url(#sky)"></rect>
+
+    
+    <circle cx="432" cy="150" r="160" fill="url(#moonGlow)"></circle>
+    <g>
+      <circle cx="432" cy="150" r="74" fill="#f2e6cf"></circle>
+      <circle cx="462" cy="134" r="66" fill="#2e4032"></circle>
+    </g>
+
+    
+    <g fill="#dcc8b2">
+      <circle cx="120" cy="90" r="2.6"></circle>
+      <circle cx="190" cy="150" r="1.8"></circle>
+      <circle cx="80" cy="200" r="2"></circle>
+      <circle cx="250" cy="70" r="2.2"></circle>
+      <circle cx="300" cy="180" r="1.6"></circle>
+      <circle cx="520" cy="280" r="2"></circle>
+      <circle cx="560" cy="120" r="1.8"></circle>
+      <circle cx="160" cy="260" r="1.5"></circle>
+    </g>
+    
+    <g fill="#e7d3b8">
+      <path d="M135 108 l4 14 14 4 -14 4 -4 14 -4 -14 -14 -4 14 -4 z"></path>
+      <path d="M520 200 l3 11 11 3 -11 3 -3 11 -3 -11 -11 -3 11 -3 z"></path>
+    </g>
+
+    
+    <path d="M0 470 C 120 420 220 460 320 450 C 430 438 520 470 600 452 L600 630 L0 630 Z" fill="#39503d"></path>
+    <path d="M0 530 C 140 500 260 540 380 522 C 480 508 540 532 600 524 L600 630 L0 630 Z" fill="#2a352a"></path>
+
+    
+    <g>
+      
+      <ellipse cx="150" cy="486" rx="58" ry="22" fill="#cbd8b0"></ellipse>
+      
+      <circle cx="150" cy="470" r="26" fill="#dcc8b2"></circle>
+      
+      <path d="M150 492 C 240 470 360 478 430 506 C 452 514 452 540 430 548 C 350 566 230 562 168 540 C 138 530 130 502 150 492 Z" fill="#b2c58c"></path>
+      <path d="M150 492 C 240 470 360 478 430 506" fill="none" stroke="#cbd8b0" stroke-width="6" stroke-linecap="round"></path>
+    </g>
+
+    
+    <g fill="#e7d3b8" font-family="Georgia, serif" font-style="italic">
+      <text x="196" y="438" font-size="26" opacity="0.9">z</text>
+      <text x="220" y="412" font-size="34" opacity="0.75">z</text>
+      <text x="250" y="380" font-size="44" opacity="0.6">z</text>
+    </g>
+  </g>
+</svg>

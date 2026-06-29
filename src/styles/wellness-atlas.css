@@ -1,0 +1,501 @@
+/* ==========================================================================
+   WELLNESS ATLAS â€” Challenge Landing System  (single shared stylesheet)
+   --------------------------------------------------------------------------
+   Sits on top of Bootstrap 5. Drop into a React app:
+       import "./wellness-atlas.css";          // once, e.g. in index.js
+   Load order:  bootstrap.min.css  â†’  wellness-atlas.css
+
+   This file matches the markup in HealthChallenges.jsx / ChallengeCard.jsx
+   exactly (original BEM class names + the tt-* nav classes).
+
+   THEMING â€” ONE shared theme for every page. Put `wa-page` on each page
+   root and all challenge pages (Health, Sleep, Toxin, â€¦) share the same
+   look & feel. Retheme globally by editing the token block below; override
+   a single token per page inline:  style={{ "--accent": "#caa45a" }}
+
+   RESPONSIVE (mobile-first):
+       base   <768px  phones        1 column
+       md     â‰¥768px  tablets       2 columns
+       lg     â‰¥992px  small desktop featured/communities split
+       xl    â‰¥1200px  desktop       3 columns  (or pass columns={2})
+
+   Contents
+     1. Fonts            6. Hero            11. Cards
+     2. Theme tokens     7. Divider         12. How-to
+     3. Reset            8. Featured        13. Communities
+     4. Navigation       9. Tabs            14. Footer
+     5. Buttons         10. Grids           15. Responsive
+   ========================================================================== */
+
+/* ==========================================================================
+   1. FONTS
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ==========================================================================
+   2. THEME TOKENS  (one shared palette â€” edit here to retheme every page)
+   ========================================================================== */
+.wa-page {
+  --paper:   #f2efe6;
+  --paper-2: #fbfaf5;
+  --forest:  #2e4032;
+  --forest-2:#39503d;
+  --accent:  #b07a4a;
+  --ink:     #2a352a;
+  --ink-3:   #51614e;
+  --muted:   #8a8270;
+  --tab-off: #9b9686;
+  --line:    rgba(46, 64, 50, 0.16);
+  --tag-completed: rgba(42, 53, 42, 0.78);
+  --cols:    3;                       /* desktop card columns (overridable)  */
+  --btn-radius: 8px;                  /* button corner rounding (0 = square) */
+  --card-radius: 16px;                /* card / container corner rounding     */
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Newsreader", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. RESET  (scoped â€” never touches Bootstrap or the rest of the app)
+   ========================================================================== */
+.wa-page *,
+.wa-page *::before,
+.wa-page *::after { box-sizing: border-box; }
+
+.wa-page img,
+.wa-page svg { display: block; max-width: 100%; }
+
+.wa-page a { color: inherit; text-decoration: none; }
+
+.wa-page :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ==========================================================================
+   4. NAVIGATION   (tt-* classes used by HealthChallenges.jsx)
+   ========================================================================== */
+.tt-nav {
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+.tt-container {
+  width: 100%;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 40px;
+}
+.tt-nav-link {
+  font-family: "Archivo", sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+  color: var(--ink-3);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+.tt-nav-link:hover { color: var(--accent); }
+.tt-brand { display: flex; align-items: center; justify-content: center; flex: none; }
+.tt-brand-logo {
+  height: var(--logo-h, 48px);       /* override: style={{ "--logo-h": "60px" }} */
+  width: auto;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   5. BUTTONS
+   ========================================================================== */
+.wa-btn {
+  display: inline-block;
+  font-family: "Archivo", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  padding: 14px 26px;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  transition: filter 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.wa-btn--solid {
+  color: var(--paper-2);
+  background: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+.wa-btn--solid:hover { filter: brightness(1.12); }
+.wa-btn--outline {
+  color: var(--ink);
+  background: none;
+  border: 1.5px solid var(--ink);
+  padding: 11px 20px;
+}
+.wa-btn--outline:hover { background: var(--ink); color: var(--paper-2); }
+
+/* ==========================================================================
+   6. HERO
+   ========================================================================== */
+.wa-hero {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 54px 40px 30px;
+  text-align: center;
+}
+.wa-hero__eyebrow {
+  font-family: "Archivo", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  margin-bottom: 30px;
+}
+.wa-hero__title {
+  font-weight: 400;
+  font-size: clamp(40px, 4.6vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.wa-hero__lede {
+  font-size: clamp(20px, 2.1vw, 25px);
+  line-height: 1.6;
+  max-width: 760px;
+  margin: 38px auto 0;
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   7. DIVIDER RULE
+   ========================================================================== */
+.wa-rule { max-width: 1180px; margin: 48px auto 0; padding: 0 40px; }
+.wa-rule--flush { margin-top: 0; }
+.wa-rule > div { border-top: 1px solid var(--line); }
+
+/* ==========================================================================
+   8. FEATURED  (This Month's Challenge)
+   ========================================================================== */
+.wa-featured { max-width: 1180px; margin: 0 auto; padding: 64px 40px 8px; }
+.wa-featured__head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+.wa-featured__head h2 {
+  font-weight: 600;
+  font-size: clamp(30px, 3.6vw, 42px);
+  margin: 0;
+}
+.wa-featured__kicker {
+  font-family: "Archivo", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+.wa-featured__grid {
+  display: grid;
+  grid-template-columns: 1fr;                  /* mobile: stacked */
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.wa-featured__media {
+  position: relative;
+  min-height: 300px;
+  background-color: var(--forest-2);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.wa-featured__img {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: repeating-linear-gradient(135deg,
+      rgba(255, 255, 255, 0.045) 0 14px, rgba(255, 255, 255, 0) 14px 28px);
+}
+.wa-featured__label {
+  position: relative; z-index: 1;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.wa-featured__badge {
+  position: absolute; z-index: 2;
+  top: 22px; left: 22px;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--accent);
+  color: var(--paper-2);
+  font-family: "Archivo", sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.16em;
+  padding: 9px 15px;
+}
+.wa-featured__badge i { display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--paper-2); }
+.wa-featured__body {
+  padding: clamp(32px, 4vw, 54px);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.wa-featured__date {
+  font-family: "Archivo", sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.wa-featured__title {
+  font-weight: 500;
+  font-size: clamp(27px, 3.3vw, 40px);
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.wa-featured__text {
+  font-family: "Archivo", sans-serif;
+  font-size: 16px; line-height: 1.7;
+  color: var(--ink-3);
+  margin: 22px 0 0;
+  text-wrap: pretty;
+}
+.wa-featured__cta { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px; }
+.wa-featured__cta .wa-btn--outline { padding: 14px 24px; }
+
+/* ==========================================================================
+   9. TABS
+   ========================================================================== */
+.wa-tabs-section { max-width: 1180px; margin: 0 auto; padding: 72px 40px 20px; }
+.wa-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 48px;
+}
+.wa-tab {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: "Archivo", sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 14px 8px;
+  margin-right: 18px;
+  margin-bottom: -1px;
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--tab-off);
+}
+.wa-tab--active { color: var(--ink); border-bottom-color: var(--accent); }
+.wa-tab__badge {
+  font-size: 11px; font-weight: 700; line-height: 1.6;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(46, 64, 50, 0.1);
+  color: var(--tab-off);
+}
+.wa-tab--active .wa-tab__badge { background: var(--accent); color: var(--paper-2); }
+.wa-panel__note {
+  font-family: "Archivo", sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 38px;
+}
+
+/* ==========================================================================
+   10. GRIDS
+   ========================================================================== */
+.wa-grid { display: grid; }
+.wa-grid--up {
+  grid-template-columns: 1fr;                  /* mobile: 1 column */
+  column-gap: 42px;
+  row-gap: 72px;
+}
+.wa-grid--past {
+  grid-template-columns: repeat(auto-fill, minmax(238px, 1fr));
+  column-gap: 32px;
+  row-gap: 44px;
+}
+
+/* ==========================================================================
+   11. CARDS  (ChallengeCard.jsx)
+   ========================================================================== */
+.wa-card { display: flex; flex-direction: column; }
+.wa-card__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background-color: var(--forest-2);
+  border: 1px solid var(--line);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.wa-card__media--past { aspect-ratio: 4 / 3; filter: grayscale(0.5); opacity: 0.72; }
+.wa-card__img {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: repeating-linear-gradient(135deg,
+      rgba(255, 255, 255, 0.045) 0 14px, rgba(255, 255, 255, 0) 14px 28px);
+}
+.wa-card__label {
+  position: relative; z-index: 1;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.wa-card__media--past .wa-card__label { font-size: 10px; color: rgba(255, 255, 255, 0.4); }
+.wa-card__tag { position: absolute; z-index: 2; font-family: "Archivo", sans-serif; font-weight: 700; }
+.wa-card__tag--month {
+  top: 14px; left: 14px;
+  background: var(--paper-2); color: var(--ink);
+  font-size: 11px; letter-spacing: 0.12em; padding: 6px 11px;
+}
+.wa-card__tag--completed {
+  top: 12px; left: 12px;
+  background: var(--tag-completed); color: var(--paper-2);
+  font-size: 10px; letter-spacing: 0.14em; padding: 5px 10px;
+}
+.wa-card__title {
+  position: relative; z-index: 1;
+  margin: -46px 16px 0 0;
+  font-weight: 500;
+  font-size: clamp(22px, 2.2vw, 27px);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.wa-card__title span {
+  background: var(--paper-2);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 3px 9px;
+}
+.wa-card__title--past { margin: 16px 0 0; font-size: 19px; line-height: 1.34; color: var(--ink-3); }
+.wa-card__body {
+  font-family: "Archivo", sans-serif;
+  font-size: 14.5px; line-height: 1.65;
+  color: var(--ink-3);
+  margin: 18px 16px 0;
+  text-wrap: pretty;
+}
+.wa-card__cta { margin: 22px 16px 0; }
+.wa-card__date {
+  font-family: "Archivo", sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 24px 16px 0;
+}
+.wa-card__date--past { font-size: 12px; font-weight: 400; color: var(--muted); margin: 12px 0 0; }
+
+/* ==========================================================================
+   12. HOW-TO
+   ========================================================================== */
+.wa-howto { max-width: 900px; margin: 0 auto; padding: 78px 40px; text-align: center; }
+.wa-howto h2 { font-weight: 400; font-size: clamp(34px, 4.4vw, 52px); margin: 0; }
+.wa-howto__p {
+  font-style: italic;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.62;
+  max-width: 760px;
+  margin: 36px auto 0;
+  text-wrap: pretty;
+}
+.wa-howto__note {
+  font-family: "Archivo", sans-serif;
+  font-style: italic; font-weight: 700;
+  font-size: 13.5px; line-height: 1.7; letter-spacing: 0.04em;
+  color: var(--accent);
+  max-width: 680px;
+  margin: 34px auto 0;
+}
+.wa-howto__cta { margin-top: 42px; }
+.wa-howto__cta .wa-btn--outline { padding: 15px 30px; }
+
+/* ==========================================================================
+   13. COMMUNITIES
+   ========================================================================== */
+.wa-comm {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 64px 40px 40px;
+  display: grid;
+  grid-template-columns: 1fr;                  /* mobile: stacked */
+  gap: 48px;
+  align-items: start;
+}
+.wa-comm__text { max-width: 760px; }
+.wa-comm__text h3 { font-weight: 500; font-size: clamp(26px, 3vw, 34px); margin: 0 0 22px; }
+.wa-comm__text p {
+  font-family: "Archivo", sans-serif;
+  font-size: 15px; line-height: 1.7;
+  color: var(--ink-3); margin: 0; text-wrap: pretty;
+}
+.wa-comm__media {
+  width: 100%;
+  max-width: 230px;
+  min-height: 120px;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background-color: var(--forest-2);
+  background-image: repeating-linear-gradient(135deg,
+      rgba(255, 255, 255, 0.045) 0 14px, rgba(255, 255, 255, 0) 14px 28px);
+  display: flex; align-items: center; justify-content: center;
+}
+.wa-comm__media span {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ==========================================================================
+   14. FOOTER
+   ========================================================================== */
+.wa-footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 40px 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Archivo", sans-serif;
+  font-size: 13.5px;
+  color: var(--accent);
+}
+.wa-footer__links { display: flex; flex-wrap: wrap; gap: 10px; }
+.wa-footer__links .sep { opacity: 0.5; }
+
+/* ==========================================================================
+   15. RESPONSIVE  (mobile-first â€” these only ADD columns on bigger screens)
+   ========================================================================== */
+
+/* â‰¥ md : tablets */
+@media (min-width: 768px) {
+  .wa-grid--up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wa-featured__media { min-height: 360px; }
+}
+
+/* â‰¥ lg : small desktop â€” featured + communities split into two columns */
+@media (min-width: 992px) {
+  .wa-featured__grid { grid-template-columns: 1.05fr 1fr; }
+  .wa-featured__media { min-height: 430px; }
+  .wa-comm { grid-template-columns: 1fr auto; }
+  .wa-comm__media { width: 230px; height: 120px; }
+}
+
+/* â‰¥ xl : desktop â€” honour the --cols prop (default 3) */
+@media (min-width: 1200px) {
+  .wa-grid--up { grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
+}
+
+/* small phones â€” single-column past grid + tighter gutters */
+@media (max-width: 575.98px) {
+  .wa-grid--past { grid-template-columns: 1fr; }
+  .tt-container,
+  .wa-hero, .wa-featured, .wa-tabs-section, .wa-howto, .wa-comm, .wa-footer, .wa-rule {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
