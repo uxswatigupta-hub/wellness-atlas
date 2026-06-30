@@ -202,6 +202,16 @@ function CountdownUnit({ value, label, accent }) {
 
 export default function SleepChallenge() {
   useViewport(); // available if you want breakpoint-driven behaviour
+  useEffect(() => {
+    // Prevent duplicate scripts if the user navigates back and forth
+    if (!document.getElementById("powr-reviews-script")) {
+      const script = document.createElement("script");
+      script.src = "https://www.powr.io/powr.js?platform=html";
+      script.id = "powr-reviews-script";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
   const cd = useCountdown();
   const [selected, setSelected] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
@@ -458,28 +468,35 @@ export default function SleepChallenge() {
             ))}
           </div>
 
-          <div className="mt-5" style={{ background: "var(--paper-2)", border: "1px solid var(--line)", borderRadius: "var(--card-radius, 16px)", padding: "clamp(28px,4vw,46px)" }}>
+          {/*<div className="mt-5" style={{ background: "var(--paper-2)", border: "1px solid var(--line)", borderRadius: "var(--card-radius, 16px)", padding: "clamp(28px,4vw,46px)" }}>
             <p style={{ ...tagStyle, marginBottom: 14 }}>Sleep Challenge Success · 7.5 hours and counting</p>
             <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(20px,2.2vw,27px)", lineHeight: 1.5, color: "var(--ink)", margin: "0 0 22px", textWrap: "pretty" }}>
               "Previously I struggled with chronic insomnia, often getting only 2–3 hours of sleep. After the first session I learned to avoid coffee and gadgets — even switching off the router — and started getting 5–6 hours. The breathing exercises and 'gibberish talk' added another 1.5 hours. Now I consistently get around 7.5 hours and wake up fresh and energetic."
             </p>
             <cite style={{ fontFamily: SANS, fontWeight: 700, fontStyle: "normal", fontSize: 16, color: "var(--accent)" }}>— Siddesh S H</cite>
-          </div>
+          </div>*/}
+
+          <div
+            className="powr-product-reviews powrLoaded mt-5"
+            id="ef0558b6_1670382326"
+            data-product-id="haircaregp"
+          ></div>
         </div>
-      </section>
+      </section >
 
 
 
       {/* ============ FOOTER ============ */}
-      <footer style={{ borderTop: "1px solid var(--line)", marginTop: 16 }}>
+      < footer style={{ borderTop: "1px solid var(--line)", marginTop: 16 }
+      }>
         <div className="text-center" style={{ maxWidth: 1180, margin: "0 auto", padding: "clamp(36px,5vw,56px) clamp(22px,5vw,40px)" }}>
           <div className="d-flex flex-wrap justify-content-center gap-4 mb-3" style={{ fontFamily: SANS, fontSize: 14 }}>
             {FOOTER_LINKS.map((l) => <span key={l} style={{ color: "var(--accent)", cursor: "pointer" }}>{l}</span>)}
           </div>
           <p style={{ fontFamily: SANS, fontSize: 13, color: "var(--muted)", margin: 0 }}>© Copyright 2024 Wellness Atlas</p>
         </div>
-      </footer>
+      </footer >
 
-    </div>
+    </div >
   );
 }
