@@ -1,0 +1,1547 @@
+/* ==========================================================================
+   WELLNESS ATLAS â€” App shell (Customer Details / Systems Audit)
+   Uses the shared theme tokens from wellness-atlas.css (.wa-page scope).
+   Load order: bootstrap.min.css â†’ wellness-atlas.css â†’ app.css
+   ========================================================================== */
+
+.wa-app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---- top banner: logo + page title --------------------------------------- */
+.wa-appbar {
+    display: flex;
+    align-items: stretch;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+}
+
+.wa-logo {
+    width: 90px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: var(--paper-2);
+    border-right: 1px solid var(--line);
+}
+
+.wa-logo__mark {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: var(--forest-2);
+    background-image: repeating-linear-gradient(135deg,
+            rgba(255, 255, 255, 0.06) 0 10px, rgba(255, 255, 255, 0) 10px 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.wa-appbar__title {
+    display: flex;
+    align-items: center;
+    padding: 20px 34px;
+}
+
+.wa-appbar__title h1 {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: clamp(22px, 3vw, 30px);
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--ink);
+}
+
+/* ---- body row: sidebar + content ----------------------------------------- */
+.wa-body {
+    display: flex;
+    flex: 1;
+    align-items: stretch;
+    min-height: 0;
+}
+
+/* ---- dark icon sidebar --------------------------------------------------- */
+.wa-side {
+    width: 90px;
+    flex: none;
+    background: #26352a;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 0 18px;
+    gap: 2px;
+    overflow-y: auto;
+}
+
+.wa-side__group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.wa-side__glabel {
+    font-family: "Archivo", sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.32);
+    text-align: center;
+    margin: 14px 0 3px;
+}
+
+.wa-side__group:first-child .wa-side__glabel {
+    margin-top: 4px;
+}
+
+.wa-side__group--account {
+    margin-top: auto;
+}
+
+.wa-side__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 4px;
+    margin: 0 10px;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.66);
+    font-family: "Archivo", sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.wa-side__item i {
+    font-size: 19px;
+}
+
+.wa-side__item:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.wa-side__item--active {
+    background: var(--paper-2);
+    color: var(--ink);
+}
+
+.wa-side__item--active:hover {
+    background: var(--paper-2);
+    color: var(--ink);
+}
+
+/* ---- content panel ------------------------------------------------------- */
+.wa-content {
+    flex: 1;
+    min-width: 0;
+    background: var(--paper-2);
+    padding: clamp(22px, 3vw, 36px) clamp(20px, 3.4vw, 44px);
+}
+
+.wa-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: "Archivo", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.wa-back:hover {
+    color: var(--accent);
+}
+
+.wa-back u {
+    text-underline-offset: 3px;
+}
+
+/* ---- profile card -------------------------------------------------------- */
+.wa-profile {
+    text-align: center;
+}
+
+.wa-profile__avatar {
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    overflow: hidden;
+    background-color: var(--forest-2);
+    background-image: repeating-linear-gradient(135deg,
+            rgba(255, 255, 255, 0.05) 0 12px, rgba(255, 255, 255, 0) 12px 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--line);
+}
+
+.wa-profile__name {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 23px;
+    color: var(--ink);
+    margin: 0;
+}
+
+.wa-profile__role {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin: 4px 0 0;
+}
+
+.wa-fields {
+    margin-top: 22px;
+    text-align: left;
+}
+
+.wa-pgroup+.wa-pgroup {
+    margin-top: 20px;
+}
+
+.wa-pgroup__h {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Archivo", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+}
+
+.wa-pgroup__h i {
+    font-size: 13px;
+}
+
+.wa-field {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(46, 64, 50, 0.07);
+    font-family: "Archivo", sans-serif;
+    font-size: 14px;
+}
+
+.wa-pgroup .wa-field:last-child {
+    border-bottom: none;
+}
+
+.wa-field__k {
+    flex: none;
+    text-align: left;
+    color: var(--ink-3);
+}
+
+.wa-field__v {
+    text-align: right;
+    color: var(--ink);
+    word-break: break-word;
+    min-width: 0;
+}
+
+/* ---- tabs ---------------------------------------------------------------- */
+.wa-atabs {
+    display: flex;
+    gap: 34px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+}
+
+.wa-atab {
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    padding: 10px 2px;
+    font-family: "Archivo", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-3);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.wa-atab:hover {
+    color: var(--ink);
+}
+
+.wa-atab--active {
+    color: var(--ink);
+    font-weight: 700;
+    border-bottom-color: #3a7d44;
+}
+
+/* ---- intro --------------------------------------------------------------- */
+.wa-intro {
+    font-family: "Archivo", sans-serif;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink-3);
+}
+
+.wa-intro p {
+    margin: 0 0 14px;
+}
+
+.wa-intro strong {
+    color: var(--ink);
+}
+
+/* ---- accordion ----------------------------------------------------------- */
+.wa-acc {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+.wa-acc__item {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper-2);
+    overflow: hidden;
+}
+
+.wa-acc__item--open {
+    box-shadow: 0 6px 22px rgba(46, 64, 50, 0.07);
+}
+
+.wa-acc__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 15px 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.wa-acc__icon {
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 50%;
+    background: rgba(176, 122, 74, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 17px;
+}
+
+.wa-acc__name {
+    flex: 1;
+    font-family: "Archivo", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+}
+
+.wa-acc__score {
+    width: 36px;
+    height: 36px;
+    flex: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.wa-acc__score--high {
+    background: #f6dcdc;
+    color: #b23b3b;
+}
+
+.wa-acc__score--low {
+    background: #cfe9cf;
+    color: #2f7d3a;
+}
+
+.wa-acc__chev {
+    flex: none;
+    color: var(--ink-3);
+    font-size: 15px;
+    display: flex;
+}
+
+.wa-acc__body {
+    padding: 2px 22px 26px;
+    font-family: "Archivo", sans-serif;
+    font-size: 14.5px;
+    line-height: 1.72;
+    color: var(--ink-3);
+}
+
+.wa-acc__body p {
+    margin: 13px 0 0;
+}
+
+.wa-acc__body strong {
+    color: var(--ink);
+}
+
+.wa-acc__body h4 {
+    font-family: "Archivo", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 20px 0 0;
+}
+
+.wa-acc__body ul,
+.wa-acc__body ol {
+    margin: 8px 0 0;
+    padding-left: 22px;
+}
+
+.wa-acc__body li {
+    margin: 4px 0;
+}
+
+.wa-callout {
+    background: #eef4ec;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 14px 0 0;
+}
+
+.wa-callout p:first-child {
+    margin-top: 0;
+}
+
+.wa-panel-empty {
+    font-family: "Archivo", sans-serif;
+    font-size: 15px;
+    color: var(--muted);
+    padding: 48px 0;
+    text-align: center;
+}
+
+/* ==========================================================================
+   RESPONSIVE â€” tablet / mobile
+   ========================================================================== */
+
+/* < lg : sidebar becomes a horizontal scrolling rail under the banner */
+@media (max-width: 991.98px) {
+    .wa-body {
+        flex-direction: column;
+    }
+
+    .wa-side {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1050;
+        width: 264px;
+        max-width: 84vw;
+        flex-direction: column;
+        padding: 16px 0 18px;
+        overflow-y: auto;
+        transform: translateX(-100%);
+        transition: transform 0.26s ease;
+        box-shadow: 0 0 44px rgba(0, 0, 0, 0.32);
+    }
+
+    .wa-side.is-open {
+        transform: translateX(0);
+    }
+
+    .wa-side__group {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .wa-side__group+.wa-side__group {
+        border-left: none;
+    }
+
+    .wa-side__glabel {
+        display: block;
+        text-align: left;
+        padding-left: 24px;
+        margin: 16px 0 4px;
+    }
+
+    .wa-side__group:first-child .wa-side__glabel {
+        margin-top: 4px;
+    }
+
+    .wa-side__group--account {
+        margin-top: auto;
+    }
+
+    .wa-side__item {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 16px;
+        margin: 0 10px;
+        font-size: 14px;
+        text-align: left;
+        min-width: 0;
+    }
+
+    .wa-side__item i {
+        font-size: 18px;
+        width: 22px;
+        text-align: center;
+    }
+}
+
+.wa-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 28, 22, 0.45);
+    z-index: 1040;
+}
+
+.wa-burger {
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink);
+    font-size: 26px;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+}
+
+/* phones â€” tighter content padding + logo column shrinks */
+@media (max-width: 575.98px) {
+    .wa-logo {
+        width: 64px;
+        padding: 8px;
+    }
+
+    .wa-logo__mark {
+        width: 42px;
+        height: 42px;
+        font-size: 10px;
+    }
+
+    .wa-appbar__title {
+        padding: 16px 18px;
+    }
+
+    .wa-content {
+        padding: 20px 16px;
+    }
+
+    .wa-atabs {
+        gap: 20px;
+    }
+}
+
+/* ==========================================================================
+   V2 â€” usability redesign (overview, severity meters, scannable content)
+   ========================================================================== */
+
+/* sticky profile on desktop so it stays in view alongside long content */
+@media (min-width: 992px) {
+    .wa-profile-sticky {
+        position: sticky;
+        top: 20px;
+    }
+}
+
+/* compact info callout that replaces the dense intro paragraphs */
+.wa-info {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #eef4ec;
+    border: 1px solid rgba(58, 125, 68, 0.18);
+    border-radius: 12px;
+    padding: 15px 17px;
+    font-family: "Archivo", sans-serif;
+    font-size: 13.5px;
+    line-height: 1.62;
+    color: var(--ink-3);
+}
+
+.wa-info>i {
+    color: #3a7d44;
+    font-size: 17px;
+    margin-top: 1px;
+    flex: none;
+}
+
+.wa-info strong {
+    color: var(--ink);
+}
+
+/* priority summary strip */
+.wa-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    margin: 18px 0 4px;
+}
+
+.wa-stat {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    padding: 15px 17px;
+}
+
+.wa-stat__k {
+    font-family: "Archivo", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.wa-stat__v {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    color: var(--ink);
+    margin-top: 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+}
+
+.wa-stat__v small {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-3);
+}
+
+/* legend */
+.wa-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 14px 0 0;
+}
+
+.wa-legend__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: "Archivo", sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-3);
+}
+
+.wa-legend__dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex: none;
+}
+
+/* section header row above the accordion (title + sort control) */
+.wa-listhead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 26px 0 0;
+}
+
+.wa-listhead h3 {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--ink);
+    margin: 0;
+}
+
+.wa-sort {
+    display: inline-flex;
+    gap: 3px;
+    background: rgba(46, 64, 50, 0.07);
+    border-radius: 9px;
+    padding: 3px;
+}
+
+.wa-sort button {
+    appearance: none;
+    border: none;
+    background: none;
+    font-family: "Archivo", sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+    padding: 6px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.wa-sort button.is-on {
+    background: var(--paper-2);
+    color: var(--ink);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.09);
+}
+
+/* name column now stacks name + severity label */
+.wa-acc__namecol {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.wa-acc__nm {
+    font-family: "Archivo", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+}
+
+.wa-sev-chip {
+    font-family: "Archivo", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+/* severity meter */
+.wa-acc__meter {
+    flex: 0 0 150px;
+    display: block;
+}
+
+.wa-meter-track {
+    display: block;
+    position: relative;
+    height: 7px;
+    border-radius: 99px;
+    background: rgba(46, 64, 50, 0.12);
+}
+
+.wa-meter-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 99px;
+}
+
+.wa-meter-tick {
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    left: 25%;
+    width: 2px;
+    background: var(--ink);
+    opacity: 0.32;
+}
+
+/* 4-tier score badge */
+.wa-acc__score--healthy {
+    background: #cfe9cf;
+    color: #2f7d3a;
+}
+
+.wa-acc__score--mild {
+    background: #f1e6c9;
+    color: #9a6d1a;
+}
+
+.wa-acc__score--moderate {
+    background: #f6e0d0;
+    color: #bb5a26;
+}
+
+.wa-acc__score--severe {
+    background: #f6dcdc;
+    color: #b23b3b;
+}
+
+/* structured body */
+.wa-sec {
+    margin-top: 22px;
+}
+
+.wa-sec__h {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+}
+
+/* 4R steps */
+.wa-steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.wa-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: var(--paper);
+}
+
+.wa-step__n {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--paper-2);
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wa-step__t {
+    font-family: "Archivo", sans-serif;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+}
+
+.wa-step__t strong {
+    color: var(--ink);
+    display: block;
+    margin-bottom: 1px;
+}
+
+/* recommendation cards */
+.wa-rec-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.wa-rec {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    padding: 16px 18px;
+}
+
+.wa-rec__t {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin: 0 0 9px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wa-rec__t i {
+    color: var(--accent);
+    font-size: 15px;
+}
+
+.wa-rec__sub {
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    color: var(--ink-3);
+    margin: 0 0 8px;
+}
+
+.wa-rec ul {
+    margin: 0;
+    padding-left: 18px;
+    font-family: "Archivo", sans-serif;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-3);
+}
+
+.wa-rec li {
+    margin: 3px 0;
+}
+
+@media (min-width: 768px) {
+    .wa-steps {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .wa-rec-grid--2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ---- dedicated profile view (opened from left nav) ----------------------- */
+.wa-profile__avatar--sm {
+    width: 92px;
+    height: 92px;
+    margin: 0;
+}
+
+.wa-profilepage__head {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin: 4px 0 26px;
+}
+
+.wa-profilepage__id h2 {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--ink);
+    margin: 0;
+}
+
+.wa-profilepage__role {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+}
+
+.wa-pcard {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--paper);
+    padding: 18px 20px;
+    height: 100%;
+}
+
+.wa-pcard .wa-pgroup__h {
+    margin-top: 0;
+}
+
+/* ---- edit mode controls ------------------------------------------------- */
+.wa-edit-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-self: center;
+    flex-wrap: wrap;
+}
+
+.wa-editbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: var(--btn-radius);
+    padding: 9px 16px;
+    border: 1.5px solid var(--ink);
+    background: none;
+    color: var(--ink);
+    transition: background 0.15s ease, color 0.15s ease, filter 0.15s ease;
+}
+
+.wa-editbtn:hover {
+    background: var(--ink);
+    color: var(--paper-2);
+}
+
+.wa-editbtn--save {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper-2);
+}
+
+.wa-editbtn--save:hover {
+    background: var(--accent);
+    color: var(--paper-2);
+    filter: brightness(1.1);
+}
+
+.wa-editbtn--ghost {
+    border-color: var(--line);
+    color: var(--ink-3);
+}
+
+.wa-editbtn--ghost:hover {
+    background: var(--line);
+    color: var(--ink);
+}
+
+.wa-editbanner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(176, 122, 74, 0.1);
+    border: 1px solid rgba(176, 122, 74, 0.3);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 0 0 20px;
+    font-family: "Archivo", sans-serif;
+    font-size: 13.5px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.wa-edit-input {
+    font-family: "Archivo", sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    text-align: right;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 5px 9px;
+    background: var(--paper-2);
+    max-width: 60%;
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.wa-edit-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.wa-edit-name {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 4px 10px;
+    background: var(--paper-2);
+}
+
+.wa-chip--edit {
+    cursor: pointer;
+}
+
+.wa-chip--edit:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.wa-sizepill--edit {
+    cursor: pointer;
+}
+
+.wa-sizepill--edit:hover {
+    border-color: var(--forest);
+}
+
+.wa-edit-colorrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wa-edit-color {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    flex: none;
+}
+
+/* ---- profile / tracking rich sections ----------------------------------- */
+.wa-psection {
+    margin-top: 34px;
+}
+
+.wa-psection__bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 18px;
+}
+
+.wa-psection__bar h3 {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink);
+    margin: 0;
+}
+
+.wa-psection__bar .wa-psection__tag {
+    font-family: "Archivo", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper-2);
+    background: var(--accent);
+    border-radius: 6px;
+    padding: 4px 9px;
+}
+
+.wa-psection__bar .line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+/* chip groups (tick-all-that-apply, selected vs not) */
+.wa-chipgroup {
+    margin-bottom: 6px;
+}
+
+.wa-chipgroup__k {
+    font-family: "Archivo", sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-3);
+    margin: 0 0 9px;
+}
+
+.wa-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.wa-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: var(--paper-2);
+}
+
+.wa-chip--on {
+    background: rgba(176, 122, 74, 0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.wa-chip--on i {
+    font-size: 12px;
+}
+
+/* color swatch + size pills */
+.wa-swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: "Archivo", sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+}
+
+.wa-swatch__dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    flex: none;
+}
+
+.wa-sizepills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.wa-sizepill {
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    width: 38px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    background: var(--paper-2);
+}
+
+.wa-sizepill--on {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--paper-2);
+}
+
+/* UCD checklist */
+.wa-ucd {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+@media (min-width: 768px) {
+    .wa-ucd {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.wa-ucd__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 11px 14px;
+    background: var(--paper);
+    font-family: "Archivo", sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+}
+
+.wa-ucd__check {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border: 1.5px solid var(--line);
+    color: transparent;
+}
+
+.wa-ucd__row--done {
+    border-color: rgba(58, 125, 68, 0.3);
+    background: #f1f7f0;
+}
+
+.wa-ucd__row--done .wa-ucd__check {
+    background: #3a7d44;
+    border-color: #3a7d44;
+    color: #fff;
+}
+
+.wa-ucd__name {
+    flex: 1;
+}
+
+.wa-ucd__date {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+/* physical UCD entries */
+.wa-ucdcard {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    padding: 15px 17px;
+}
+
+.wa-ucdcard+.wa-ucdcard {
+    margin-top: 12px;
+}
+
+.wa-ucdcard__t {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wa-ucdcard__t i {
+    color: var(--accent);
+}
+
+.wa-ucdmeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+}
+
+.wa-ucdmeta div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.wa-ucdmeta dt {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.wa-ucdmeta dd {
+    color: var(--ink);
+    margin: 0;
+}
+
+/* ---- inner left section nav (transposed tabs) --------------------------- */
+.wa-split {
+    display: flex;
+    gap: clamp(20px, 3vw, 38px);
+    align-items: flex-start;
+}
+
+.wa-subnav {
+    flex: 0 0 232px;
+}
+
+@media (min-width: 992px) {
+    .wa-subnav {
+        position: sticky;
+        top: 20px;
+    }
+}
+
+.wa-subnav__label {
+    font-family: "Archivo", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 4px 0 10px;
+    padding-left: 4px;
+}
+
+.wa-subnav__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.wa-subnav__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-family: "Archivo", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: background 0.14s ease, color 0.14s ease;
+}
+
+.wa-subnav__item:hover {
+    background: rgba(46, 64, 50, 0.05);
+    color: var(--ink);
+}
+
+.wa-subnav__item i {
+    font-size: 17px;
+    width: 20px;
+    text-align: center;
+    flex: none;
+}
+
+.wa-subnav__item--active {
+    background: var(--paper);
+    border-color: var(--line);
+    color: var(--ink);
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(46, 64, 50, 0.06);
+}
+
+.wa-subnav__item--active i {
+    color: var(--accent);
+}
+
+.wa-subnav__chev {
+    margin-left: auto;
+    color: var(--accent);
+    font-size: 13px;
+    display: none;
+}
+
+.wa-subnav__item--active .wa-subnav__chev {
+    display: block;
+}
+
+.wa-panelcol {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ---- compact client header strip (Customer Details context) ------------- */
+.wa-clienthdr {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--paper);
+    padding: 16px 20px;
+    margin: 2px 0 26px;
+}
+
+.wa-clienthdr__avatar {
+    width: 56px;
+    height: 56px;
+    flex: none;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background-color: var(--forest-2);
+    background-image: repeating-linear-gradient(135deg,
+            rgba(255, 255, 255, 0.06) 0 10px, rgba(255, 255, 255, 0) 10px 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.wa-clienthdr__id {
+    min-width: 0;
+}
+
+.wa-clienthdr__name {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.wa-clienthdr__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin-top: 5px;
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    color: var(--ink-3);
+}
+
+.wa-clienthdr__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.wa-clienthdr__meta i {
+    font-size: 13px;
+    color: var(--accent);
+}
+
+.wa-clienthdr__cta {
+    margin-left: auto;
+}
+
+.wa-clienthdr__cta button {
+    appearance: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: none;
+    border: 1.5px solid var(--ink);
+    border-radius: var(--btn-radius);
+    padding: 9px 16px;
+    font-family: "Archivo", sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.wa-clienthdr__cta button:hover {
+    background: var(--ink);
+    color: var(--paper-2);
+}
+
+@media (max-width: 575.98px) {
+    .wa-clienthdr__cta {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .wa-clienthdr__cta button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* stack the section nav on top on tablet / mobile */
+@media (max-width: 991.98px) {
+    .wa-split {
+        flex-direction: column;
+    }
+
+    .wa-subnav {
+        flex: none;
+        width: 100%;
+    }
+
+    .wa-subnav__list {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .wa-subnav__item {
+        flex: 1 1 auto;
+    }
+
+    .wa-subnav__chev {
+        display: none !important;
+    }
+}

@@ -202,16 +202,7 @@ function CountdownUnit({ value, label, accent }) {
 
 export default function SleepChallenge() {
   useViewport(); // available if you want breakpoint-driven behaviour
-  useEffect(() => {
-    // Prevent duplicate scripts if the user navigates back and forth
-    if (!document.getElementById("powr-reviews-script")) {
-      const script = document.createElement("script");
-      script.src = "https://www.powr.io/powr.js?platform=html";
-      script.id = "powr-reviews-script";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
+
   const cd = useCountdown();
   const [selected, setSelected] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
@@ -477,10 +468,10 @@ export default function SleepChallenge() {
           </div>*/}
 
           <div
-            className="powr-product-reviews powrLoaded mt-5"
+            className="powr-product-reviews mt-5"
             id="ef0558b6_1670382326"
-            data-product-id="haircaregp"
-          ></div>
+            data-product-id="chlg-sleep"
+          />
         </div>
       </section >
 
