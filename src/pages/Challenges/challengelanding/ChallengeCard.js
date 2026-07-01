@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 /**
  * ChallengeCard — reusable challenge card.
@@ -54,14 +53,9 @@ export default function ChallengeCard({ challenge = {}, variant = "upcoming" }) 
             <p className="wa-card__body">{desc}</p>
             <div className="wa-card__cta">
                 {hasDetails ? (
-                    <Link
-                        to={detailsHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="wa-btn wa-btn--outline"
-                    >
+                    <a href={detailsHref} className="wa-btn wa-btn--outline">
                         DETAILS
-                    </Link>
+                    </a>
                 ) : (
                     <span className="wa-btn wa-btn--outline" aria-disabled="true">
                         COMING SOON
