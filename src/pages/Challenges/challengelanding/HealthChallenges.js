@@ -1,8 +1,33 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ChallengeCard from "./ChallengeCard";
-import { SAMPLE_CHALLENGES, normalizeChallenge } from "./challenges.data";
+import { SAMPLE_CHALLENGES, normalizeChallenge, selectChallengesForRegion } from "./challenges.data";
 import communityImg from "../../../assets/logo/participating+communities.png";
 import SiteNav from "../../../components/navbar/navbar";
+
+function resolveEventsApiUrl(apiUrl) {
+    return apiUrl.startsWith("/") ? apiUrl : `/${apiUrl}`;
+}
+
+function getAffiliateCode() {
+    return new URLSearchParams(window.location.search).get("affcode") || "";
+}
+
+function inferIsIndia() {
+    try {
+        const locale = navigator.languages?.[0] || navigator.language || "";
+        const region = typeof Intl.Locale === "function"
+            ? new Intl.Locale(locale).region
+            : String(locale).split(/[-_]/)[1]?.toUpperCase();
+        if (region === "IN") return true;
+
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+        if (timezone === "Asia/Kolkata" || timezone === "Asia/Calcutta") return true;
+    } catch (err) {
+        console.warn("[HealthChallenges] Country inference failed:", err);
+    }
+
+    return false;
+}
 
 
 /*const NAV_LEFT = ["home", "philosophy", "people", "offerings", "events", "testimonials"];
@@ -22,17 +47,26 @@ const NAV_RIGHT = ["learn", "weshare", "health2.0", "community.inc", "join"];*/
  *
  * Requires wellness-atlas.css (import once, after Bootstrap).
  */
-export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" }) {
+export default function HealthChallenges({ apiUrl = "/event/api/v1/events", columns = 3, theme = "" }) {
     const [challenges, setChallenges] = useState(null);
     const [tab, setTab] = useState("upcoming"); // "upcoming" | "past"
+    const [isIndia] = useState(() => inferIsIndia());
+    const [affcode] = useState(() => getAffiliateCode());
 
     useEffect(() => {
         if (!apiUrl) return;
         let active = true;
         (async () => {
             try {
-                const res = await fetch(apiUrl, { headers: { Accept: "application/json" } });
-                if (!res.ok) throw new Error("HTTP " + res.status);
+                const requestUrl = resolveEventsApiUrl(apiUrl);
+                const res = await fetch(requestUrl, {
+                    headers: {
+                        Accept: "application/json",
+                        "X-Service-Id": "frontend-service",
+                    },
+                });
+
+                if (!res.ok) throw new Error("HTTP " + res.status + " for " + apiUrl);
                 const data = await res.json();
                 const list = Array.isArray(data)
                     ? data
@@ -48,18 +82,53 @@ export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" 
         };
     }, [apiUrl]);
 
-    const cards = challenges && challenges.length ? challenges : SAMPLE_CHALLENGES;
+    const cards = useMemo(() => {
+        if (challenges && challenges.length) {
+            return selectChallengesForRegion(challenges, isIndia, affcode);
+        }
+        return SAMPLE_CHALLENGES;
+    }, [affcode, challenges, isIndia]);
+
+    const sortedCards = useMemo(
+        () => [...cards].sort((left, right) => (left.sortTs || Number.MAX_SAFE_INTEGER) - (right.sortTs || Number.MAX_SAFE_INTEGER)),
+        [cards]
+    );
 
     const featured = useMemo(
         () =>
-            cards.find((c) => c.status === "current") ||
-            cards.find((c) => c.status === "upcoming") ||
-            cards[0] ||
+            sortedCards.find((c) => c.status === "current") ||
+            sortedCards.find((c) => c.status === "upcoming") ||
+            [...sortedCards].reverse().find((c) => c.status === "past") ||
+            sortedCards[0] ||
             {},
-        [cards]
+        [sortedCards]
     );
-    const upcoming = useMemo(() => cards.filter((c) => c.status === "upcoming"), [cards]);
-    const past = useMemo(() => cards.filter((c) => c.status === "past"), [cards]);
+    const upcoming = useMemo(
+        () => sortedCards.filter((c) => c.status === "upcoming"),
+        [sortedCards]
+    );
+    const past = useMemo(
+        () => [...sortedCards].filter((c) => c.status === "past").reverse(),
+        [sortedCards]
+    );
+
+    const featuredHeading = featured.status === "current"
+        ? "This Month's Challenge"
+        : featured.status === "upcoming"
+            ? "Upcoming Challenge"
+            : "Featured Challenge";
+
+    const featuredKicker = featured.status === "current"
+        ? "NOW LIVE"
+        : featured.status === "upcoming"
+            ? "STARTING SOON"
+            : "COMPLETED CHALLENGE";
+
+    const featuredBadge = featured.status === "current"
+        ? "NOW ON"
+        : featured.status === "upcoming"
+            ? "UP NEXT"
+            : "DONE";
 
     const featuredImg = featured.imageUrl || featured.image;
     const featuredImgStyle = featuredImg
@@ -96,8 +165,8 @@ export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" 
             {/* THIS MONTH'S CHALLENGE (FEATURED) */}
             <section className="wa-featured">
                 <div className="wa-featured__head">
-                    <h2>This Month&rsquo;s Challenge</h2>
-                    <span className="wa-featured__kicker">JUNE 2026 &middot; STARTS 2ND WEDNESDAY</span>
+                    <h2>{featuredHeading}</h2>
+                    <span className="wa-featured__kicker">{featured.date || featuredKicker}</span>
                 </div>
                 <div className="wa-featured__grid">
                     <div className="wa-featured__media">
@@ -105,7 +174,7 @@ export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" 
                         {!featuredImg && <span className="wa-featured__label">{featured.img}</span>}
                         <div className="wa-featured__badge">
                             <i />
-                            NOW ON
+                            {featuredBadge}
                         </div>
                     </div>
                     <div className="wa-featured__body">
@@ -113,12 +182,18 @@ export default function HealthChallenges({ apiUrl = "", columns = 3, theme = "" 
                         <h3 className="wa-featured__title">{featured.title}</h3>
                         <p className="wa-featured__text">{featured.body || featured.description}</p>
                         <div className="wa-featured__cta">
-                            <a href={featured.href || "#"} className="wa-btn wa-btn--solid">
+                            <a href={featured.checkoutHref || featured.href || "#"} className="wa-btn wa-btn--solid">
                                 JOIN THIS CHALLENGE
                             </a>
-                            <a href={featured.href || "#"} className="wa-btn wa-btn--outline">
-                                DETAILS
-                            </a>
+                            {featured.hasDetails ? (
+                                <a href={featured.detailsHref} className="wa-btn wa-btn--outline">
+                                    DETAILS
+                                </a>
+                            ) : (
+                                <span className="wa-btn wa-btn--outline" aria-disabled="true">
+                                    COMING SOON
+                                </span>
+                            )}
                         </div>
                     </div>
                 </div>
