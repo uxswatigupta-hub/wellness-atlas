@@ -1,0 +1,20 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+
+jobs:
+  deploy:
+    uses: WellnessAtlas/shared-actions/.github/workflows/deploy-teaplate-react-vite.yml@main
+    with:
+      environment: ${{ inputs.environment }}
+      deploy_path: challenges
+    secrets: inherit
