@@ -47,17 +47,209 @@ export const SAMPLE_CHALLENGES = [
     { status: "upcoming", month: "TBA", title: "The Mirror Challenge (only for men)", body: "5 Days, 5 Shifts \u2014 take a step forward towards becoming a Complete Man.", date: "DATES TO BE ANNOUNCED", img: "the mirror", imageUrl: mirrorImg },
 ];
 
+const PROGRAM_ITEM_ROUTE_MAP = {
+    wa_chlg_sleep: "/sleep-challenge",
+    wa_chlg_toxin: "/toxin-challenge",
+};
+
+const CHECKOUT_BASE_URL = "https://app.thewellnessatlas.com/basket_checkout/";
+const CHECKOUT_SERVICE_ID = "frontend-service";
+
+function getProgramItemId(value) {
+    return String(value || "").toLowerCase();
+}
+
+function getChallengeFamilyKey(programItemId) {
+    const normalized = getProgramItemId(programItemId);
+    if (normalized.startsWith("wa_chlg_dom_")) return normalized.slice("wa_chlg_dom_".length);
+    if (normalized.startsWith("wa_chlg_")) return normalized.slice("wa_chlg_".length);
+    return normalized;
+}
+
+function getVariantType(programItemId) {
+    return getProgramItemId(programItemId).startsWith("wa_chlg_dom_") ? "india" : "global";
+}
+
+function buildInternalRoute(path) {
+    if (!path || path === "#") return "#";
+    if (/^https?:\/\//i.test(path)) return path;
+
+    const publicUrl = (process.env.PUBLIC_URL || "").replace(/\/$/, "");
+    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+    return `${publicUrl}${normalizedPath}` || normalizedPath;
+}
+
+function pickCurrency(prices, isIndia) {
+    const options = Array.isArray(prices) ? prices : [];
+    if (!options.length) return isIndia ? "INR" : "USD";
+
+    const availableCurrencies = options.map((price) => String(price.currency || "").toUpperCase()).filter(Boolean);
+    if (isIndia && availableCurrencies.includes("INR")) return "INR";
+    if (!isIndia && availableCurrencies.includes("USD")) return "USD";
+    if (!isIndia) {
+        const firstNonInr = availableCurrencies.find((currency) => currency !== "INR");
+        if (firstNonInr) return firstNonInr;
+    }
+    return availableCurrencies[0] || (isIndia ? "INR" : "USD");
+}
+
+function buildCheckoutHref(eventId, currency, affcode) {
+    if (!eventId || !currency) return "#";
+    const url = new URL(CHECKOUT_BASE_URL);
+    url.searchParams.set("event_id", String(eventId));
+    url.searchParams.set("service_id", CHECKOUT_SERVICE_ID);
+    if (affcode) {
+        url.searchParams.set("affcode", affcode);
+    }
+    url.searchParams.set("currency", currency);
+    return url.toString();
+}
+
+function decorateChallengeForRegion(challenge, isIndia, affcode) {
+    const currency = pickCurrency(challenge.prices, isIndia);
+    const checkoutHref = buildCheckoutHref(challenge.eventId, currency, affcode);
+    const detailsHref = challenge.detailsHref || challenge.href || null;
+    const hasDetails = Boolean(detailsHref && detailsHref !== "#");
+
+    return {
+        ...challenge,
+        currency,
+        checkoutHref,
+        detailsHref,
+        hasDetails,
+        href: checkoutHref !== "#" ? checkoutHref : detailsHref,
+    };
+}
+
+export function selectChallengesForRegion(challenges, isIndia, affcode = "") {
+    const groups = new Map();
+
+    for (const challenge of challenges || []) {
+        const familyKey = challenge.familyKey || challenge.programItemId || challenge.title;
+        const existing = groups.get(familyKey) || [];
+        existing.push(challenge);
+        groups.set(familyKey, existing);
+    }
+
+    return Array.from(groups.values()).map((variants) => {
+        const preferredVariant = variants.find((variant) => variant.variantType === (isIndia ? "india" : "global"));
+        const fallbackVariant = isIndia
+            ? variants.find((variant) => variant.prices?.some((price) => String(price.currency || "").toUpperCase() === "INR"))
+            : variants.find((variant) => variant.prices?.some((price) => String(price.currency || "").toUpperCase() !== "INR"));
+        const chosen = preferredVariant || fallbackVariant || variants[0];
+        return decorateChallengeForRegion(chosen, isIndia, affcode);
+    });
+}
+
+function parseDateOnly(value) {
+    if (!value) return null;
+    if (value instanceof Date) {
+        return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+    }
+
+    const match = String(value).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (match) {
+        return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    }
+
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return null;
+    return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
+}
+
+function getToday() {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+}
+
+function getOrdinal(day) {
+    const mod10 = day % 10;
+    const mod100 = day % 100;
+    if (mod10 === 1 && mod100 !== 11) return `${day}ST`;
+    if (mod10 === 2 && mod100 !== 12) return `${day}ND`;
+    if (mod10 === 3 && mod100 !== 13) return `${day}RD`;
+    return `${day}TH`;
+}
+
+function formatSingleDate(date) {
+    if (!date) return "DATES TO BE ANNOUNCED";
+    return `${getOrdinal(date.getDate())} ${date.toLocaleString("en-US", { month: "long" }).toUpperCase()} ${date.getFullYear()}`;
+}
+
+function formatDateRange(startDate, endDate) {
+    if (!startDate && !endDate) return "DATES TO BE ANNOUNCED";
+    if (!startDate) return formatSingleDate(endDate);
+    if (!endDate || startDate.getTime() === endDate.getTime()) return formatSingleDate(startDate);
+
+    const startMonth = startDate.toLocaleString("en-US", { month: "long" }).toUpperCase();
+    const endMonth = endDate.toLocaleString("en-US", { month: "long" }).toUpperCase();
+
+    if (startDate.getFullYear() === endDate.getFullYear() && startMonth === endMonth) {
+        return `${getOrdinal(startDate.getDate())} ${startMonth} - ${getOrdinal(endDate.getDate())} ${endMonth} ${endDate.getFullYear()}`;
+    }
+
+    return `${formatSingleDate(startDate)} - ${formatSingleDate(endDate)}`;
+}
+
+function getStatus(startDate, endDate) {
+    if (!startDate && !endDate) return "upcoming";
+    const today = getToday();
+    const start = startDate || endDate;
+    const end = endDate || startDate;
+
+    if (end && end < today) return "past";
+    if (start && start > today) return "upcoming";
+    return "current";
+}
+
+function getMonthLabel(startDate) {
+    return startDate
+        ? startDate.toLocaleString("en-US", { month: "short" }).toUpperCase()
+        : "TBA";
+}
+
+function pickSampleMetadata(programItemId, title) {
+    const programItem = (programItemId || "").toLowerCase();
+    const titleText = (title || "").toLowerCase();
+
+    if (PROGRAM_ITEM_ROUTE_MAP[programItem]) {
+        return SAMPLE_CHALLENGES.find((sample) => sample.href === PROGRAM_ITEM_ROUTE_MAP[programItem]) || null;
+    }
+
+    return SAMPLE_CHALLENGES.find((sample) => sample.title.toLowerCase() === titleText) || null;
+}
+
 /** Map an arbitrary API record onto the card shape. Tolerant of common field names. */
 export function normalizeChallenge(x) {
     if (!x || typeof x !== "object") return null;
+
+    const programItemId = x.program_item_id || x.programItemId || "";
+    if (!String(programItemId).toLowerCase().startsWith("wa_chlg")) return null;
+
+    const title = x.title || x.name || "";
+    const startDate = parseDateOnly(x.start_date || x.startDate || x.date);
+    const endDate = parseDateOnly(x.end_date || x.endDate) || startDate;
+    const sample = pickSampleMetadata(programItemId, title);
+    const rawDetailsHref = PROGRAM_ITEM_ROUTE_MAP[String(programItemId).toLowerCase()] || sample?.href || x.href || x.url || x.link || "#";
+    const detailsHref = buildInternalRoute(rawDetailsHref);
+
     return {
-        title: x.title || x.name || "",
+        title,
         body: x.body || x.description || x.summary || "",
-        date: x.date || x.dateRange || x.dates || "",
-        month: x.month || x.monthLabel || "",
-        status: (x.status || x.state || "upcoming").toLowerCase(),
-        imageUrl: x.imageUrl || x.image || x.photo || x.picture || x.cover || null,
-        img: x.imageLabel || x.label || "challenge",
-        href: x.href || x.url || x.link || "#",
+        date: x.dateRange || x.dates || formatDateRange(startDate, endDate),
+        month: x.month || x.monthLabel || getMonthLabel(startDate),
+        status: getStatus(startDate, endDate),
+        imageUrl: x.image_url || x.imageUrl || x.image || x.photo || x.picture || x.cover || sample?.imageUrl || null,
+        img: x.imageLabel || x.label || sample?.img || "challenge",
+        href: detailsHref,
+        detailsHref,
+        programItemId,
+        familyKey: getChallengeFamilyKey(programItemId),
+        variantType: getVariantType(programItemId),
+        eventId: x.id || x.event_id || x.eventId || null,
+        prices: Array.isArray(x.prices) ? x.prices : [],
+        startDate,
+        endDate,
+        sortTs: (startDate || endDate)?.getTime() || Number.MAX_SAFE_INTEGER,
     };
 }
