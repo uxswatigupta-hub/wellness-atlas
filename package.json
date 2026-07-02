@@ -2,6 +2,7 @@
   "name": "react-figma-wacmsdashboard",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/challenges",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "BUILD_PATH=dist react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

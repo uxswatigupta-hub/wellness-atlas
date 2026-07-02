@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 /**
  * ChallengeCard — reusable challenge card.
@@ -13,7 +12,7 @@ import { Link } from "react-router-dom";
  *   variant: "upcoming" | "past"
  */
 export default function ChallengeCard({ challenge = {}, variant = "upcoming" }) {
-    const { title, body, description, date, month, imageUrl, img, href } = challenge;
+    const { title, body, description, date, month, imageUrl, img, detailsHref, hasDetails } = challenge;
     const desc = body || description || "";
     const label = img || "challenge";
     const isPast = variant === "past";
@@ -53,14 +52,15 @@ export default function ChallengeCard({ challenge = {}, variant = "upcoming" }) 
             </h3>
             <p className="wa-card__body">{desc}</p>
             <div className="wa-card__cta">
-                <Link
-                    to={href || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="wa-btn wa-btn--outline"
-                >
-                    EXPLORE
-                </Link>
+                {hasDetails ? (
+                    <a href={detailsHref} className="wa-btn wa-btn--outline">
+                        DETAILS
+                    </a>
+                ) : (
+                    <span className="wa-btn wa-btn--outline" aria-disabled="true">
+                        COMING SOON
+                    </span>
+                )}
             </div>
             <div className="wa-card__date">{date}</div>
         </article>
