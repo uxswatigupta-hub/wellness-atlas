@@ -19,6 +19,7 @@ reportWebVitals();
 */
 
 import "bootstrap/dist/css/bootstrap.min.css";  // 1st
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import React from "react";
 import ReactDOM from "react-dom/client";

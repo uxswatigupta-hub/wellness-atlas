@@ -11,6 +11,7 @@ import { Navbar, Container, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/wellness-atlas.css";
 import logoImg from "../../assets/logo/WellnessAtlas_Logo1.png";
+import { Link, useNavigate } from "react-router-dom";
 
 // Single source of truth for the menu structure.
 // Edit here and it updates on every page.
@@ -37,28 +38,31 @@ const LINKS = {
 };*/
 
 export default function SiteNav() {
+  const navigate = useNavigate();
   return (
     <Navbar expand="lg" className="wa-nav" collapseOnSelect sticky="top">
       <Container fluid className="px-lg-4 px-3">
         {/* Left: logo */}
         <div className="tt-container d-flex align-items-center justify-content-between w-100" style={{ paddingTop: 16, paddingBottom: 16 }}>
-          <a href="/" className="tt-brand" style={{ gap: ".7rem" }}>
+          <Link to="/" className="tt-brand" style={{ gap: ".7rem" }}>
             <img src={logoImg} alt="Wellness Atlas" className="tt-brand-logo" />
-            {/*<span style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 20, color: "var(--ink)" }}>Wellness Atlas</span>*/}
-          </a>
+          </Link>
           <div className="d-flex align-items-center">
-            <Button href="/login" className="wa-login">
+            <Button
+              className="wa-login"
+              onClick={() => navigate("/login")}
+            >
               LOGIN
             </Button>
           </div>
         </div>
 
         {/* Hamburger — auto-shows below the `lg` breakpoint */}
-         {/*<Navbar.Toggle aria-controls="wa-navbar" />
+        {/*<Navbar.Toggle aria-controls="wa-navbar" />
 
         <Navbar.Collapse id="wa-navbar" className="justify-content-end">
           {/* Center: categorized links */}
-          {/*
+        {/*
           <Nav className="mx-auto align-items-lg-center gap-lg-4">
             <Nav.Link href="/">Home</Nav.Link>
 
@@ -73,8 +77,8 @@ export default function SiteNav() {
             ))}
           </Nav>*/}
 
-          {/* Right: login */}
-          {/*<Button href="/login" className="wa-login ms-lg-3 mt-3 mt-lg-0">
+        {/* Right: login */}
+        {/*<Button href="/login" className="wa-login ms-lg-3 mt-3 mt-lg-0">
             LOGIN
           </Button>
         </Navbar.Collapse>*/}
